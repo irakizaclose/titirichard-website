@@ -1,1 +1,1453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>titiRichard Company Ltd - International Software Internships</title>
+    <style>
+        /* STEP 1: BASIC RESET - Remove default browser styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        /* STEP 2: BODY STYLING - Set up the main page look */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* STEP 3: HEADER/NAVIGATION - Fixed top bar with logo and menu */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hamburger menu button - hidden on desktop */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            transition: all 0.3s;
+            border-radius: 3px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* Dropdown menu styling */
+        .nav-item {
+            position: relative;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 250px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border-radius: 8px;
+            margin-top: 0.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            z-index: 1000;
+            max-height: 0;
+            overflow: hidden;
+        }
+
+        .dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            max-height: 500px;
+        }
+
+        .dropdown a {
+            color: #333;
+            padding: 1rem 1.5rem;
+            display: block;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown a:hover {
+            background: #f8f9fa;
+            color: #667eea;
+        }
+
+        .has-dropdown {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .has-dropdown::after {
+            content: ' ▼';
+            font-size: 0.7rem;
+            transition: transform 0.3s;
+        }
+
+        .has-dropdown.active::after {
+            transform: rotate(180deg);
+        }
+
+        /* STEP 4: HERO SECTION - Large banner at top with main message */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 150px 2rem 100px;
+            text-align: center;
+            margin-top: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Image slider for hero section */
+        .hero-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .hero-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-slide.active {
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1.2s;
+        }
+
+        /* STEP 5: CALL-TO-ACTION BUTTON - Main button style */
+        .cta-button {
+            background: white;
+            color: #667eea;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* STEP 6: CONTAINER - Keeps content centered and padded */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #667eea;
+        }
+
+        /* STEP 7: FEATURES GRID - Shows services in card format */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        /* Highlight animation for targeted cards */
+        .feature-card.highlight {
+            animation: highlightPulse 2s ease-in-out;
+            border: 3px solid #667eea;
+        }
+
+        @keyframes highlightPulse {
+            0%, 100% {
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            }
+            50% {
+                box-shadow: 0 10px 30px rgba(102, 126, 234, 0.6);
+                transform: translateY(-10px) scale(1.05);
+            }
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        /* STEP 8: STATISTICS SECTION - Shows impressive numbers */
+        .stats {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* STEP 9: HOW IT WORKS SECTION - Process explanation */
+        .how-it-works {
+            background: white;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .step {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: #0449d3;
+            color: rgb(14, 12, 12);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+        }
+
+        /* STEP 10: CONTACT FORM - For student applications */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        /* STEP 11: FOOTER - Bottom section */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 3rem 2rem 1rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #bbb;
+            line-height: 1.8;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a:hover {
+            color: #667eea;
+            padding-left: 5px;
+            transition: all 0.3s;
+        }
+
+        .contact-info {
+            list-style: none;
+        }
+
+        .contact-info li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .contact-info li strong {
+            color: #667eea;
+            min-width: 80px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: #667eea;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            transition: transform 0.3s, background 0.3s;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-5px);
+            background: #764ba2;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #444;
+            color: #888;
+        }
+
+        /* Newsletter signup styling */
+        .newsletter-form {
+            margin-top: 1rem;
+        }
+
+        .newsletter-form input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #444;
+            border-radius: 5px;
+            background: #34495e;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .newsletter-form button {
+            width: 100%;
+            padding: 0.8rem;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .newsletter-form button:hover {
+            background: #764ba2;
+        }
+
+        /* Contact methods styling */
+        .contact-methods {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .contact-method {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: #34495e;
+            border-radius: 25px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .contact-method:hover {
+            background: #667eea;
+            transform: translateY(-3px);
+        }
+
+        /* Map container */
+        .map-container {
+            margin-top: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 200px;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Service Forms Styling */
+        .service-form-page {
+            display: none;
+            min-height: 100vh;
+            padding: 120px 2rem 4rem;
+            background: #f8f9fa;
+        }
+
+        .service-form-page.active {
+            display: block;
+        }
+
+        .service-form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .service-form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .service-form-header h1 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-form-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.8rem 1.5rem;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s;
+        }
+
+        .back-button:hover {
+            background: #764ba2;
+            transform: translateX(-5px);
+        }
+
+        .main-content {
+            display: block;
+        }
+
+        .main-content.hidden {
+            display: none;
+        }
+
+        /* STEP 12: ANIMATIONS - Smooth entrance effects */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* STEP 13: MOBILE RESPONSIVE - Adjust for smaller screens */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            /* Show hamburger menu on mobile */
+            .hamburger {
+                display: flex;
+            }
+
+            /* Mobile menu styling */
+            .nav-links {
+                position: fixed;
+                top: 60px;
+                right: -100%;
+                width: 70%;
+                height: calc(100vh - 60px);
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                flex-direction: column;
+                gap: 0;
+                padding: 2rem 0;
+                transition: right 0.3s;
+                overflow-y: auto;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links li {
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+
+            .nav-links a {
+                padding: 1rem 2rem;
+                display: block;
+            }
+
+            .dropdown {
+                position: static;
+                background: rgba(255,255,255,0.1);
+                margin: 0;
+                box-shadow: none;
+                border-radius: 0;
+            }
+
+            .dropdown a {
+                color: white;
+                padding: 0.8rem 2.5rem;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+
+            .dropdown a:hover {
+                background: rgba(255,255,255,0.1);
+                color: white;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- STEP 14: HEADER HTML - Top navigation bar -->
+    <header>
+        <nav>
+            <div class="logo">titiRichard Company Ltd</div>
+            
+            <!-- Hamburger Menu Button -->
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" onclick="closeMenu()">Home</a></li>
+                <li class="nav-item">
+                    <a href="javascript:void(0)" class="has-dropdown" onclick="toggleDropdown(event)">Services</a>
+                    <div class="dropdown">
+                        <a href="#features" onclick="showMainContent()">All Services</a>
+                        <a href="javascript:void(0)" onclick="showServiceForm('global-opportunities')">🌍 Global Opportunities</a>
+                        <a href="javascript:void(0)" onclick="showServiceForm('career-guidance')">💼 Career Guidance</a>
+                        <a href="javascript:void(0)" onclick="showServiceForm('skill-development')">📚 Skill Development</a>
+                        <a href="javascript:void(0)" onclick="showServiceForm('success-support')">✨ Success Support</a>
+                        <a href="javascript:void(0)" onclick="showServiceForm('partner-network')">🤝 Partner Network</a>
+                    </div>
+                </li>
+                <li><a href="#how-it-works" onclick="closeMenu()">Process</a></li>
+                <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- STEP 15: HERO SECTION HTML - Main banner -->
+    <section class="hero" id="home">
+        <!-- Image Slider Background -->
+        <div class="hero-slider">
+            <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200');"></div>
+            <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1200');"></div>
+            <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1556761175-b413da4baf72?w=1200');"></div>
+            <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200');"></div>
+        </div>
+
+        <div class="hero-content">
+            <h1>Your Gateway to International Software Development Internships</h1>
+            <p>Connect with top tech companies worldwide and launch your career in software development</p>
+            <a href="#contact" class="cta-button">Get Started Today</a>
+        </div>
+    </section>
+
+    <!-- STEP 16: FEATURES SECTION HTML - Why choose us -->
+    <section class="container main-content" id="features">
+        <h2 class="section-title">Why Choose titiRichard?</h2>
+        <div class="features">
+            <!-- Feature Card 1 -->
+            <div class="feature-card" id="global-opportunities">
+                <div class="feature-icon">🌍</div>
+                <h3>Global Opportunities</h3>
+                <p>Access internships from leading tech companies across North America, Europe, Asia, and beyond.</p>
+            </div>
+            <!-- Feature Card 2 -->
+            <div class="feature-card" id="career-guidance">
+                <div class="feature-icon">💼</div>
+                <h3>Career Guidance</h3>
+                <p>Receive personalized mentorship, resume reviews, and interview preparation from industry experts.</p>
+            </div>
+            <!-- Feature Card 3 -->
+            <div class="feature-card" id="student-focused">
+                <div class="feature-icon">🎓</div>
+                <h3>Student-Focused</h3>
+                <p>Programs designed specifically for students at all levels, from beginners to advanced developers.</p>
+            </div>
+            <!-- Feature Card 4 -->
+            <div class="feature-card" id="partner-network">
+                <div class="feature-icon">🤝</div>
+                <h3>Partner Network</h3>
+                <p>Partnered with 500+ companies including startups, scale-ups, and Fortune 500 tech giants.</p>
+            </div>
+            <!-- Feature Card 5 -->
+            <div class="feature-card" id="skill-development">
+                <div class="feature-icon">📚</div>
+                <h3>Skill Development</h3>
+                <p>Access to exclusive workshops, coding bootcamps, and technical training programs.</p>
+            </div>
+            <!-- Feature Card 6 -->
+            <div class="feature-card" id="success-support">
+                <div class="feature-icon">✨</div>
+                <h3>Success Support</h3>
+                <p>End-to-end support from application to placement, including visa assistance and relocation guidance.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICE FORM PAGES -->
+    <!-- Global Opportunities Form -->
+    <div class="service-form-page" id="form-global-opportunities">
+        <div class="service-form-container">
+            <a href="javascript:void(0)" onclick="showMainContent()" class="back-button">← Back to Home</a>
+            <div class="service-form-header">
+                <h1>🌍 Global Opportunities Application</h1>
+                <p>Apply for international software development internships worldwide</p>
+            </div>
+            <form class="contact-form" onsubmit="handleServiceForm(event, 'Global Opportunities')">
+                <div class="form-group">
+                    <label for="go-name">Full Name *</label>
+                    <input type="text" id="go-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="go-email">Email Address *</label>
+                    <input type="email" id="go-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="go-phone">Phone Number *</label>
+                    <input type="tel" id="go-phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="go-university">University/Institution *</label>
+                    <input type="text" id="go-university" required>
+                </div>
+                <div class="form-group">
+                    <label for="go-country">Preferred Country/Region *</label>
+                    <select id="go-country" required>
+                        <option value="">Select preferred region</option>
+                        <option value="north-america">North America (USA, Canada)</option>
+                        <option value="europe">Europe</option>
+                        <option value="asia">Asia</option>
+                        <option value="australia">Australia/New Zealand</option>
+                        <option value="any">Any Location</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="go-skills">Technical Skills *</label>
+                    <textarea id="go-skills" rows="3" placeholder="e.g., Python, JavaScript, React..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="go-experience">Experience Level *</label>
+                    <select id="go-experience" required>
+                        <option value="">Select experience level</option>
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="go-message">Why do you want an international internship?</label>
+                    <textarea id="go-message" rows="4"></textarea>
+                </div>
+                <button type="submit" class="cta-button" style="width: 100%;">Submit Application</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Career Guidance Form -->
+    <div class="service-form-page" id="form-career-guidance">
+        <div class="service-form-container">
+            <a href="javascript:void(0)" onclick="showMainContent()" class="back-button">← Back to Home</a>
+            <div class="service-form-header">
+                <h1>💼 Career Guidance Program</h1>
+                <p>Get personalized mentorship and career development support</p>
+            </div>
+            <form class="contact-form" onsubmit="handleServiceForm(event, 'Career Guidance')">
+                <div class="form-group">
+                    <label for="cg-name">Full Name *</label>
+                    <input type="text" id="cg-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="cg-email">Email Address *</label>
+                    <input type="email" id="cg-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="cg-phone">Phone Number *</label>
+                    <input type="tel" id="cg-phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="cg-current-status">Current Status *</label>
+                    <select id="cg-current-status" required>
+                        <option value="">Select your status</option>
+                        <option value="student">Student</option>
+                        <option value="recent-graduate">Recent Graduate</option>
+                        <option value="career-change">Career Changer</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="cg-goals">Career Goals *</label>
+                    <textarea id="cg-goals" rows="4" placeholder="What are your career goals?" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="cg-challenges">Main Challenges</label>
+                    <textarea id="cg-challenges" rows="3" placeholder="What challenges are you facing?"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="cg-mentorship">Type of Support Needed *</label>
+                    <select id="cg-mentorship" required>
+                        <option value="">Select support type</option>
+                        <option value="resume">Resume Review</option>
+                        <option value="interview">Interview Preparation</option>
+                        <option value="career-planning">Career Planning</option>
+                        <option value="all">All of the Above</option>
+                    </select>
+                </div>
+                <button type="submit" class="cta-button" style="width: 100%;">Request Career Guidance</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Skill Development Form -->
+    <div class="service-form-page" id="form-skill-development">
+        <div class="service-form-container">
+            <a href="javascript:void(0)" onclick="showMainContent()" class="back-button">← Back to Home</a>
+            <div class="service-form-header">
+                <h1>📚 Skill Development Program</h1>
+                <p>Enroll in workshops, bootcamps, and technical training</p>
+            </div>
+            <form class="contact-form" onsubmit="handleServiceForm(event, 'Skill Development')">
+                <div class="form-group">
+                    <label for="sd-name">Full Name *</label>
+                    <input type="text" id="sd-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="sd-email">Email Address *</label>
+                    <input type="email" id="sd-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="sd-phone">Phone Number *</label>
+                    <input type="tel" id="sd-phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="sd-current-skills">Current Skills *</label>
+                    <textarea id="sd-current-skills" rows="3" placeholder="What skills do you already have?" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="sd-learn">Skills You Want to Learn *</label>
+                    <textarea id="sd-learn" rows="3" placeholder="e.g., React, Python, Machine Learning..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="sd-program">Program Type *</label>
+                    <select id="sd-program" required>
+                        <option value="">Select program type</option>
+                        <option value="workshop">Workshop (1-2 days)</option>
+                        <option value="bootcamp">Bootcamp (4-12 weeks)</option>
+                        <option value="course">Online Course</option>
+                        <option value="mentorship">One-on-One Mentorship</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="sd-availability">Availability *</label>
+                    <select id="sd-availability" required>
+                        <option value="">Select availability</option>
+                        <option value="full-time">Full Time</option>
+                        <option value="part-time">Part Time (Weekends)</option>
+                        <option value="flexible">Flexible Schedule</option>
+                    </select>
+                </div>
+                <button type="submit" class="cta-button" style="width: 100%;">Enroll Now</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success Support Form -->
+    <div class="service-form-page" id="form-success-support">
+        <div class="service-form-container">
+            <a href="javascript:void(0)" onclick="showMainContent()" class="back-button">← Back to Home</a>
+            <div class="service-form-header">
+                <h1>✨ Success Support Program</h1>
+                <p>Get comprehensive support from application to placement</p>
+            </div>
+            <form class="contact-form" onsubmit="handleServiceForm(event, 'Success Support')">
+                <div class="form-group">
+                    <label for="ss-name">Full Name *</label>
+                    <input type="text" id="ss-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="ss-email">Email Address *</label>
+                    <input type="email" id="ss-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="ss-phone">Phone Number *</label>
+                    <input type="tel" id="ss-phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="ss-stage">Current Stage *</label>
+                    <select id="ss-stage" required>
+                        <option value="">Select your stage</option>
+                        <option value="preparing">Preparing to Apply</option>
+                        <option value="applying">Currently Applying</option>
+                        <option value="interview">Interview Stage</option>
+                        <option value="offer">Received Offer</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="ss-support">Support Needed *</label>
+                    <textarea id="ss-support" rows="4" placeholder="What kind of support do you need?" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="ss-visa">Need Visa Assistance? *</label>
+                    <select id="ss-visa" required>
+                        <option value="">Select option</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                        <option value="not-sure">Not Sure Yet</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="ss-relocation">Need Relocation Guidance? *</label>
+                    <select id="ss-relocation" required>
+                        <option value="">Select option</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                        <option value="not-sure">Not Sure Yet</option>
+                    </select>
+                </div>
+                <button type="submit" class="cta-button" style="width: 100%;">Get Support</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Partner Network Form -->
+    <div class="service-form-page" id="form-partner-network">
+        <div class="service-form-container">
+            <a href="javascript:void(0)" onclick="showMainContent()" class="back-button">← Back to Home</a>
+            <div class="service-form-header">
+                <h1>🤝 Partner Network Access</h1>
+                <p>Connect with our 500+ partner companies</p>
+            </div>
+            <form class="contact-form" onsubmit="handleServiceForm(event, 'Partner Network')">
+                <div class="form-group">
+                    <label for="pn-name">Full Name *</label>
+                    <input type="text" id="pn-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="pn-email">Email Address *</label>
+                    <input type="email" id="pn-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="pn-phone">Phone Number *</label>
+                    <input type="tel" id="pn-phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="pn-university">University/Institution *</label>
+                    <input type="text" id="pn-university" required>
+                </div>
+                <div class="form-group">
+                    <label for="pn-company-type">Preferred Company Type *</label>
+                    <select id="pn-company-type" required>
+                        <option value="">Select company type</option>
+                        <option value="startup">Startup</option>
+                        <option value="scaleup">Scale-up</option>
+                        <option value="enterprise">Enterprise/Fortune 500</option>
+                        <option value="any">Any Company Type</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="pn-industry">Preferred Industry *</label>
+                    <select id="pn-industry" required>
+                        <option value="">Select industry</option>
+                        <option value="fintech">FinTech</option>
+                        <option value="healthtech">HealthTech</option>
+                        <option value="ecommerce">E-commerce</option>
+                        <option value="ai-ml">AI/Machine Learning</option>
+                        <option value="gaming">Gaming</option>
+                        <option value="any">Any Industry</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="pn-skills">Your Skills *</label>
+                    <textarea id="pn-skills" rows="3" placeholder="List your technical skills..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="pn-why">Why do you want to join our partner network?</label>
+                    <textarea id="pn-why" rows="4"></textarea>
+                </div>
+                <button type="submit" class="cta-button" style="width: 100%;">Join Partner Network</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- STEP 17: STATISTICS SECTION HTML - Show impact numbers -->
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>5,000+</h3>
+                <p>Students Placed</p>
+            </div>
+            <div class="stat-item">
+                <h3>500+</h3>
+                <p>Partner Companies</p>
+            </div>
+            <div class="stat-item">
+                <h3>50+</h3>
+                <p>Countries</p>
+            </div>
+            <div class="stat-item">
+                <h3>95%</h3>
+                <p>Success Rate</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- STEP 18: HOW IT WORKS SECTION HTML - Process steps -->
+    <section class="container how-it-works" id="how-it-works">
+        <h2 class="section-title">How It Works</h2>
+        <div class="steps">
+            <!-- Step 1 -->
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Register</h3>
+                <p>Create your profile and tell us about your skills, interests, and career goals.</p>
+            </div>
+            <!-- Step 2 -->
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Match</h3>
+                <p>Our AI-powered system matches you with suitable internship opportunities worldwide.</p>
+            </div>
+            <!-- Step 3 -->
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Prepare</h3>
+                <p>Get guidance on applications, resume optimization, and interview preparation.</p>
+            </div>
+            <!-- Step 4 -->
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>Apply</h3>
+                <p>Submit applications to your chosen companies with our support and recommendations.</p>
+            </div>
+            <!-- Step 5 -->
+            <div class="step">
+                <div class="step-number">5</div>
+                <h3>Succeed</h3>
+                <p>Land your dream internship and launch your international software development career!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- STEP 19: CONTACT FORM SECTION HTML - Application form -->
+    <section class="container" id="contact">
+        <h2 class="section-title">Start Your Journey Today</h2>
+        <form class="contact-form" onsubmit="handleSubmit(event)">
+            <!-- Name field -->
+            <div class="form-group">
+                <label for="name">Full Name *</label>
+                <input type="text" id="name" required>
+            </div>
+            <!-- Email field -->
+            <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" required>
+            </div>
+            <!-- Phone field -->
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone">
+            </div>
+            <!-- University field -->
+            <div class="form-group">
+                <label for="university">University/Institution *</label>
+                <input type="text" id="university" required>
+            </div>
+            <!-- Education level dropdown -->
+            <div class="form-group">
+                <label for="level">Education Level *</label>
+                <select id="level" required>
+                    <option value="">Select your level</option>
+                    <option value="undergraduate">Undergraduate</option>
+                    <option value="graduate">Graduate</option>
+                    <option value="postgraduate">Postgraduate</option>
+                </select>
+            </div>
+            <!-- Skills textarea -->
+            <div class="form-group">
+                <label for="skills">Technical Skills</label>
+                <textarea id="skills" rows="3" placeholder="e.g., Python, JavaScript, React, Node.js..."></textarea>
+            </div>
+            <!-- Goals textarea -->
+            <div class="form-group">
+                <label for="message">Tell us about your goals</label>
+                <textarea id="message" rows="4" placeholder="What type of internship are you looking for?"></textarea>
+            </div>
+            <!-- Submit button -->
+            <button type="submit" class="cta-button" style="width: 100%;">Submit Application</button>
+        </form>
+    </section>
+
+    <!-- STEP 20: FOOTER HTML - Bottom section -->
+    <footer>
+        <div class="footer-content">
+            <!-- Company Info Section -->
+            <div class="footer-section">
+                <h3>titiRichard Company Ltd</h3>
+                <p>Empowering students to achieve their international software development dreams through quality internship placements worldwide.</p>
+                
+                <!-- Social Media Links -->
+                <div class="social-links">
+                    <a href="https://facebook.com/titiRichard" target="_blank" title="Facebook">📘</a>
+                    <a href="https://twitter.com/titiRichard" target="_blank" title="Twitter">🐦</a>
+                    <a href="https://linkedin.com/company/titiRichard" target="_blank" title="LinkedIn">💼</a>
+                    <a href="https://instagram.com/titiRichard" target="_blank" title="Instagram">📷</a>
+                    <a href="https://youtube.com/@titiRichard" target="_blank" title="YouTube">📺</a>
+                </div>
+
+                <!-- Quick Contact Methods -->
+                <div class="contact-methods">
+                    <a href="https://wa.me/250XXXXXXXXX" target="_blank" class="contact-method">
+                        💬 WhatsApp
+                    </a>
+                    <a href="https://t.me/titiRichard" target="_blank" class="contact-method">
+                        ✈️ Telegram
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links Section -->
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="#home">Home</a>
+                <a href="#features">Our Services</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#contact">Apply Now</a>
+                <a href="#about">About Us</a>
+                <a href="#testimonials">Success Stories</a>
+                <a href="#faq">FAQ</a>
+                <a href="#blog">Blog & Resources</a>
+            </div>
+
+            <!-- Services Section -->
+            <div class="footer-section">
+                <h3>Our Services</h3>
+                <a href="#global-opportunities" onclick="scrollToService('global-opportunities')">Global Opportunities</a>
+                <a href="#career-guidance" onclick="scrollToService('career-guidance')">Career Guidance</a>
+                <a href="#skill-development" onclick="scrollToService('skill-development')">Skill Development</a>
+                <a href="#success-support" onclick="scrollToService('success-support')">Success Support</a>
+                <a href="#partner-network" onclick="scrollToService('partner-network')">Partner Network</a>
+                
+                <!-- Newsletter Signup -->
+                <h3 style="margin-top: 2rem;">Newsletter</h3>
+                <p style="font-size: 0.9rem;">Get weekly internship opportunities!</p>
+                <form class="newsletter-form" onsubmit="handleNewsletterSignup(event)">
+                    <input type="email" placeholder="Your email address" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+
+            <!-- Contact Info Section -->
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <ul class="contact-info">
+                    <li>
+                        <strong>📍 Address:</strong>
+                        <span>Karongi District, Rubengera Sector, Gacaca Village, Rwanda</span>
+                    </li>
+                    <li>
+                        <strong>📞 Phone:</strong>
+                        <span>+250 788 123 456</span>
+                    </li>
+                    <li>
+                        <strong>✉️ Email:</strong>
+                        <span>info@titiRichard.com</span>
+                    </li>
+                    <li>
+                        <strong>💬 WhatsApp:</strong>
+                        <span>+250 788 123 456</span>
+                    </li>
+                    <li>
+                        <strong>🕒 Hours:</strong>
+                        <span>Mon - Fri: 8AM - 6PM<br>Sat: 9AM - 2PM<br>Sun: Closed</span>
+                    </li>
+                </ul>
+
+                <!-- Map Location -->
+                <div class="map-container">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127537.89415085698!2d29.33815!3d-2.1673!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19dca6f0f2e5c77f%3A0x7a0b0b0b0b0b0b0b!2sKarongi%2C%20Rwanda!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
+                        allowfullscreen="" 
+                        loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 titiRichard Company Ltd. All rights reserved.</p>
+            <p>Registered in Rwanda (Company No: +250 794 525 549)
+                <p style="color: #764ba2;">developed by close</p>
+    </footer>
+
+    <!-- STEP 21: JAVASCRIPT - Interactive functionality -->
+    <script>
+        // FUNCTION 1: Handle form submission
+        function handleSubmit(event) {
+            event.preventDefault(); // Prevent page reload
+            alert('Thank you for your interest! Our team will contact you within 24 hours to discuss your internship opportunities.');
+            event.target.reset(); // Clear the form
+        }
+
+        // FUNCTION 2: Toggle mobile hamburger menu
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const hamburger = document.querySelector('.hamburger');
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+
+        // FUNCTION 3: Close mobile menu
+        function closeMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const hamburger = document.querySelector('.hamburger');
+            const dropdowns = document.querySelectorAll('.dropdown');
+            const hasDropdowns = document.querySelectorAll('.has-dropdown');
+            
+            navLinks.classList.remove('active');
+            hamburger.classList.remove('active');
+            dropdowns.forEach(dropdown => dropdown.classList.remove('active'));
+            hasDropdowns.forEach(link => link.classList.remove('active'));
+        }
+
+        // FUNCTION 4: Toggle dropdown menu on click
+        function toggleDropdown(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            const link = event.target;
+            const dropdown = link.nextElementSibling;
+            
+            // Close other dropdowns
+            document.querySelectorAll('.dropdown').forEach(d => {
+                if (d !== dropdown) {
+                    d.classList.remove('active');
+                }
+            });
+            document.querySelectorAll('.has-dropdown').forEach(l => {
+                if (l !== link) {
+                    l.classList.remove('active');
+                }
+            });
+            
+            // Toggle current dropdown
+            dropdown.classList.toggle('active');
+            link.classList.toggle('active');
+        }
+
+        // FUNCTION 5: Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const navItem = event.target.closest('.nav-item');
+            if (!navItem) {
+                document.querySelectorAll('.dropdown').forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+                document.querySelectorAll('.has-dropdown').forEach(link => {
+                    link.classList.remove('active');
+                });
+            }
+        });
+
+        // FUNCTION 6: Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && href !== 'javascript:void(0)') {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+
+        // FUNCTION 7: Scroll to specific service card and highlight it
+        function scrollToService(serviceId) {
+            // Close the menu
+            closeMenu();
+            
+            // Wait a bit for menu to close, then scroll
+            setTimeout(() => {
+                const targetCard = document.getElementById(serviceId);
+                
+                if (targetCard) {
+                    // Remove highlight from all cards
+                    document.querySelectorAll('.feature-card').forEach(card => {
+                        card.classList.remove('highlight');
+                    });
+                    
+                    // Scroll to the target card
+                    targetCard.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                    
+                    // Add highlight effect after scrolling
+                    setTimeout(() => {
+                        targetCard.classList.add('highlight');
+                        
+                        // Remove highlight after animation completes
+                        setTimeout(() => {
+                            targetCard.classList.remove('highlight');
+                        }, 2000);
+                    }, 500);
+                }
+            }, 100);
+        }
+
+        // FUNCTION 8: Handle newsletter signup
+        function handleNewsletterSignup(event) {
+            event.preventDefault();
+            const email = event.target.querySelector('input[type="email"]').value;
+            alert(`Thank you for subscribing! We'll send weekly internship opportunities to ${email}`);
+            event.target.reset();
+        }
+
+        // FUNCTION 9: Show service form page
+        function showServiceForm(serviceName) {
+            // Close menu
+            closeMenu();
+            
+            // Hide all content
+            document.querySelectorAll('.main-content').forEach(el => {
+                el.classList.add('hidden');
+            });
+            
+            // Hide all service forms
+            document.querySelectorAll('.service-form-page').forEach(form => {
+                form.classList.remove('active');
+            });
+            
+            // Show selected service form
+            const formPage = document.getElementById('form-' + serviceName);
+            if (formPage) {
+                formPage.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // FUNCTION 10: Show main content (go back home)
+        function showMainContent() {
+            // Hide all service forms
+            document.querySelectorAll('.service-form-page').forEach(form => {
+                form.classList.remove('active');
+            });
+            
+            // Show main content
+            document.querySelectorAll('.main-content').forEach(el => {
+                el.classList.remove('hidden');
+            });
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // FUNCTION 11: Handle service form submission
+        function handleServiceForm(event, serviceName) {
+            event.preventDefault();
+            alert(`Thank you for applying to ${serviceName}! Our team will review your application and contact you within 24-48 hours.`);
+            event.target.reset();
+            
+            // Go back to home after 2 seconds
+            setTimeout(() => {
+                showMainContent();
+            }, 2000);
+        }
+
+        // FUNCTION 12: Image slider for hero section
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.hero-slide');
+        
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        
+        // Change slide every 5 seconds
+        setInterval(nextSlide, 5000);
+    </script>
+</body>
+</html>
